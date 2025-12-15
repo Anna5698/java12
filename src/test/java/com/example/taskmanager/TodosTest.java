@@ -50,16 +50,24 @@ public class TodosTest {
         todos.add(epic);
         todos.add(meeting);
 
+        // Поиск "Хлеб" - должен найти simpleTask и epic
         Task[] found = todos.search("Хлеб");
-        assertEquals(2, found.length);
+        Task[] expectedForBread = {simpleTask, epic};
+        assertArrayEquals(expectedForBread, found);
 
+        // Поиск "Молоко" - должен найти только epic
         found = todos.search("Молоко");
-        assertEquals(1, found.length);
+        Task[] expectedForMilk = {epic};
+        assertArrayEquals(expectedForMilk, found);
 
+        // Поиск "Пекарня" - должен найти только meeting
         found = todos.search("Пекарня");
-        assertEquals(1, found.length);
+        Task[] expectedForBakery = {meeting};
+        assertArrayEquals(expectedForBakery, found);
 
+        // Поиск "Несуществующее" - не должен ничего найти
         found = todos.search("Несуществующее");
-        assertEquals(0, found.length);
+        Task[] expectedForNonExistent = {};
+        assertArrayEquals(expectedForNonExistent, found);
     }
 }
